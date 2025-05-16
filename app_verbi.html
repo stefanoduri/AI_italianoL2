@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Costruisci frasi!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Sfondo leggermente blu */
+        }
+        .interactive-card {
+            background-color: white;
+            border-radius: 12px; /* Angoli più arrotondati */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Ombra più morbida */
+            transition: transform 0.3s ease-in-out;
+        }
+        .interactive-card:hover {
+            transform: translateY(-5px);
+        }
+        .custom-select {
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007bff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.4-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 0.7em top 50%, 0 0;
+            background-size: 0.65em auto, 100%;
+            border: 1px solid #cbd5e1; /* Bordo più chiaro */
+            border-radius: 8px; /* Angoli arrotondati per select */
+            padding: 0.75rem 2.5rem 0.75rem 1rem; /* Padding per testo e freccia */
+            font-size: 1rem;
+            color: #2d3748; /* Testo più scuro */
+            background-color: #ffffff;
+        }
+        .custom-select:focus {
+            outline: none;
+            border-color: #4a90e2; /* Colore del bordo al focus */
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.5); /* Ombra al focus */
+        }
+        .btn-primary {
+            background-color: #4a90e2; /* Blu primario */
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+        }
+        .btn-primary:hover {
+            background-color: #357abd; /* Blu più scuro all'hover */
+            transform: translateY(-2px);
+        }
+        .btn-primary:active {
+            transform: translateY(0px);
+        }
+        .output-section {
+            background-color: #e9eff5; /* Sfondo leggermente diverso per l'output */
+            border-left: 4px solid #4a90e2; /* Bordo sinistro colorato */
+        }
+        .valency-info {
+            font-size: 0.9rem;
+            color: #4a5568; /* Grigio scuro per info valenza */
+        }
+
+        /* Colori per le parti della frase */
+        .sentence-subject { color: blue; font-weight: bold; }
+        .sentence-verb { color: red; font-weight: bold; /* font-style: italic; */ } /* Rimosso corsivo per leggibilità se il verbo è già complesso */
+        .sentence-direct-object { color: #48D1CC;  font-weight: bold;} /* MediumTurquoise */
+        .sentence-preposition { color: black;  font-weight: bold;}
+        .sentence-indirect-object { color: green;  font-weight: bold;}
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6">
+
+    <div class="interactive-card w-full max-w-2xl p-6 sm:p-8">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">Costruiamo frasi semplici</h1>
+        </header>
+
+        <p class="text-gray-700 mb-6 text-sm sm:text-base">
+            Questa applicazione ti aiuta a costruire una frase semplice e corretta.</b>
+			Le frasi sono come dei piccoli film e i verbi sono come registi che hanno bisogno di attori per fare il film.</br>
+			Per prima cosa scegli il <span class="sentence-verb">verbo</span> e poi il <span class="sentence-subject">soggetto</span>.
+			Il <span class="sentence-subject">soggetto</span> è come l'attore principale. Poi pensa in che <b>tempo</b> si svolge il tuo film: nel passato, nel presente o nel futuro?</br>Facciamo qualche esempio: vuoi parlare di <span class="sentence-verb">mangiare</span> (ad esempio vuoi dire che <b>ieri</b> hai mangiato una pizza)
+			oppure di <span class="sentence-verb">regalare</span> (ad esempio vuoi parlare della bicicletta che <b>domani</b> regalerai a tuo figlio),
+			oppure di <span class="sentence-verb">dormire</span> (ad esempio vuoi parlare del gatto che <b>adesso</b> dorme sulla sedia)?</br>
+			Qui sotto puoi scegliere un verbo, un soggetto e un tempo. Quando clicchi sul bottone blu questa app ti mostra
+			come stanno insieme correttamente, ti dice se il verbo ha bisogno di altri attori e ti fa un esempio di frase completa, con tutti gli attori indispensabili.
+        </p>
+
+        <div class="space-y-6 mb-8">
+            <div>
+                <label for="verbSelect" class="block text-sm font-medium text-gray-700 mb-1">1. Scegli un verbo:</label>
+                <select id="verbSelect" class="custom-select w-full"></select>
+                <p id="verbValencyInfo" class="valency-info mt-1"></p>
+            </div>
+
+            <div>
+                <label for="tenseSelect" class="block text-sm font-medium text-gray-700 mb-1">3. Scegli un tempo del verbo:</label>
+                <select id="tenseSelect" class="custom-select w-full"></select>
+            </div>
+
+            <div>
+                <label for="subjectSelect" class="block text-sm font-medium text-gray-700 mb-1">2. Scegli un soggetto:</label>
+                <select id="subjectSelect" class="custom-select w-full"></select>
+                <p id="subjectTypeInfo" class="valency-info mt-1"></select>
+            </div>
+        </div>
+
+        <button id="generateButton" class="btn-primary w-full text-lg">
+            Costruisci la Frase
+        </button>
+
+        <div id="outputArea" class="mt-8 space-y-4 hidden">
+            <div class="output-section p-4 rounded-lg">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Questi sono il soggetto e il verbo messi insieme correttamente</h2>
+                <p id="sentenceOutput" class="text-lg text-gray-700"></p>
+            </div>
+            <div class="output-section p-4 rounded-lg">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Manca qualcosa? Il verbo ha bisogno di altri attori?</h2>
+                <div id="argumentPrompts" class="text-gray-700 space-y-1"></div>
+            </div>
+            <div id="exampleSentenceSection" class="output-section p-4 rounded-lg hidden">
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">Questa è una frase completa!</h2>
+                <p id="exampleSentenceOutput" class="text-lg text-gray-700"></p>
+				</br>
+				<span class="valency-info mt-1">
+				Il soggetto è <span class="sentence-subject">blu</span>, il verbo è <span class="sentence-verb">rosso</span>, il complemento diretto è 
+				<span class="sentence-direct-object">azzurro</span>, quello indiretto è <span class="sentence-indirect-object">verde</span>, 
+				la preposizione è <span class="sentence-preposition">nera</span>
+				</span>
+            </div>
+        </div>
+         <div id="errorMessage" class="mt-4 text-red-600 font-semibold hidden"></div>
+    </div>
+
+    <script>
+        // --- DATI ---
+        const verbsData = [
+            // Monovalenti
+            {
+                infinitive: "dormire", valency: 1, auxiliary: "avere", particleStem: "dormit",
+                argsPrompts: ["Chi dorme?"],
+                conjugations: { presente: ["dormo", "dormi", "dorme", "dormiamo", "dormite", "dormono"], passato_prossimo_aux: ["ho", "hai", "ha", "abbiamo", "avete", "hanno"], futuro_semplice: ["dormirò", "dormirai", "dormirà", "dormiremo", "dormirete", "dormiranno"] }
+            },
+            {
+                infinitive: "sbadigliare", valency: 1, auxiliary: "avere", particleStem: "sbadigliat",
+                argsPrompts: ["Chi sbadiglia?"],
+                conjugations: { presente: ["sbadiglio", "sbadigli", "sbadiglia", "sbadigliamo", "sbadigliate", "sbadigliano"], passato_prossimo_aux: ["ho", "hai", "ha", "abbiamo", "avete", "hanno"], futuro_semplice: ["sbadiglierò", "sbadiglierai", "sbadiglierà", "sbadiglieremo", "sbadiglierete", "sbadiglieranno"] }
+            },
+            {
+                infinitive: "nascere", valency: 1, auxiliary: "essere", particleStem: "nat",
+                argsPrompts: ["Chi nasce?"],
+                conjugations: { presente: ["nasco", "nasci", "nasce", "nasciamo", "nascete", "nascono"], passato_prossimo_aux: ["sono", "sei", "è", "siamo", "siete", "sono"], futuro_semplice: ["nascerò", "nascerai", "nascerà", "nasceremo", "nascerete", "nasceranno"] }
+            },
+            // Bivalenti
+            {
+                infinitive: "mangiare", valency: 2, auxiliary: "avere", particleStem: "mangiat",
+                argsPrompts: ["Chi mangia?", "Che cosa?"],
+                exampleArgs: [{type: "directObject", text: "la pizza"}],
+                conjugations: { presente: ["mangio", "mangi", "mangia", "mangiamo", "mangiate", "mangiano"], passato_prossimo_aux: ["ho", "hai", "ha", "abbiamo", "avete", "hanno"], futuro_semplice: ["mangerò", "mangerai", "mangerà", "mangeremo", "mangerete", "mangeranno"] }
+            },
+            {
+                infinitive: "leggere", valency: 2, auxiliary: "avere", particleStem: "lett", // participio "letto"
+                argsPrompts: ["Chi legge?", "Che cosa?"],
+                exampleArgs: [{type: "directObject", text: "un libro interessante"}],
+                conjugations: { presente: ["leggo", "leggi", "legge", "leggiamo", "leggete", "leggono"], passato_prossimo_aux: ["ho", "hai", "ha", "abbiamo", "avete", "hanno"], futuro_semplice: ["leggerò", "leggerai", "leggerà", "leggeremo", "leggerete", "leggeranno"] }
+            },
+            {
+                infinitive: "andare", valency: 2, auxiliary: "essere", particleStem: "andat",
+                argsPrompts: ["Chi/Cosa va?", "Dove (es. a Roma, al mercato)?"],
+                exampleArgs: [{type: "preposition", text: "al"}, {type: "indirectObject", text: "cinema"}],
+                conjugations: { presente: ["vado", "vai", "va", "andiamo", "andate", "vanno"], passato_prossimo_aux: ["sono", "sei", "è", "siamo", "siete", "sono"], futuro_semplice: ["andrò", "andrai", "andrà", "andremo", "andrete", "andranno"] }
+            },
+             {
+                infinitive: "telefonare", valency: 2, auxiliary: "avere", particleStem: "telefonat",
+                argsPrompts: ["Chi telefona?", "A chi?"],
+                exampleArgs: [{type: "preposition", text: "a"}, {type: "indirectObject", text: "sua madre"}],
+                conjugations: { presente: ["telefono", "telefoni", "telefona", "telefoniamo", "telefonate", "telefonano"], passato_prossimo_aux: ["ho", "hai", "ha", "abbiamo", "avete", "hanno"], futuro_semplice: ["telefonerò", "telefonerai", "telefonerà", "telefoneremo", "telefonerete", "telefoneranno"] }
+            },
+            // Trivalenti
+            {
+                infinitive: "dare", valency: 3, auxiliary: "avere", particleStem: "dat", // participio "dato"
+                argsPrompts: ["Chi/Cosa dà?", "Che cosa?", "A chi?"],
+                exampleArgs: [{type: "directObject", text: "un fiore"}, {type: "preposition", text: "alla"}, {type: "indirectObject", text: "professoressa"}],
+                conjugations: { presente: ["do", "dai", "dà", "diamo", "date", "danno"], passato_prossimo_aux: ["ho", "hai", "ha", "abbiamo", "avete", "hanno"], futuro_semplice: ["darò", "darai", "darà", "daremo", "darete", "daranno"] }
+            },
+            {
+                infinitive: "regalare", valency: 3, auxiliary: "avere", particleStem: "regalat",
+                argsPrompts: ["Chi regala?", "Che cosa?", "A chi?"],
+                exampleArgs: [{type: "directObject", text: "una bicicletta"}, {type: "preposition", text: "a"}, {type: "indirectObject", text: "mio figlio"}],
+                conjugations: { presente: ["regalo", "regali", "regala", "regaliamo", "regalate", "regalano"], passato_prossimo_aux: ["ho", "hai", "ha", "abbiamo", "avete", "hanno"], futuro_semplice: ["regalerò", "regalerai", "regalerà", "regaleremo", "regalerete", "regaleranno"] }
+            },
+            {
+                infinitive: "spedire", valency: 3, auxiliary: "avere", particleStem: "spedit", // participio "spedito"
+                argsPrompts: ["Chi spedisce?", "Che cosa?", "A chi?"],
+                exampleArgs: [{type: "directObject", text: "un pacco"}, {type: "preposition", text: "ai"}, {type: "indirectObject", text: "nonni"}],
+                conjugations: { presente: ["spedisco", "spedisci", "spedisce", "spediamo", "spedite", "spediscono"], passato_prossimo_aux: ["ho", "hai", "ha", "abbiamo", "avete", "hanno"], futuro_semplice: ["spedirò", "spedirai", "spedirà", "spediremo", "spedirete", "spediranno"] }
+            }
+        ];
+
+        const subjectsData = [
+            { text: "Io (uomo)", personIndex: 0, number: "singolare", gender: "m" }, { text: "Io (donna)", personIndex: 0, number: "singolare", gender: "f" },
+            { text: "Tu (uomo)", personIndex: 1, number: "singolare", gender: "m" }, { text: "Tu (donna)", personIndex: 1, number: "singolare", gender: "f" },
+            { text: "Lui", personIndex: 2, number: "singolare", gender: "m" }, { text: "Lei", personIndex: 2, number: "singolare", gender: "f" },
+            { text: "Esso (oggetto m.)", personIndex: 2, number: "singolare", gender: "m" }, { text: "Essa (oggetto f.)", personIndex: 2, number: "singolare", gender: "f" },
+            { text: "Il bambino", personIndex: 2, number: "singolare", gender: "m" }, { text: "La bambina", personIndex: 2, number: "singolare", gender: "f" },
+            { text: "Un signore", personIndex: 2, number: "singolare", gender: "m" }, { text: "Una signora", personIndex: 2, number: "singolare", gender: "f" },
+            { text: "Noi (uomini o gruppo di uomini e donne)", personIndex: 3, number: "plural", gender: "m" }, { text: "Noi (donne)", personIndex: 3, number: "plural", gender: "f" },
+            { text: "Voi (uomini o gruppo di uomini e donne)", personIndex: 4, number: "plural", gender: "m" }, { text: "Voi (donne)", personIndex: 4, number: "plural", gender: "f" },
+            { text: "Loro  (uomini o gruppo di uomini e donne)", personIndex: 5, number: "plural", gender: "m" }, { text: "Loro (donne)", personIndex: 5, number: "plural", gender: "f" },
+            { text: "I gatti", personIndex: 5, number: "plural", gender: "m" }, { text: "Le farfalle", personIndex: 5, number: "plural", gender: "f" },
+            { text: "Degli amici", personIndex: 5, number: "plural", gender: "m" }, { text: "Delle amiche", personIndex: 5, number: "plural", gender: "f" }
+        ];
+
+        const tensesData = [
+            { value: "presente", label: "Presente" },
+            { value: "passato_prossimo", label: "Passato" },
+            { value: "futuro_semplice", label: "Futuro" }
+        ];
+
+        // --- ELEMENTI DOM ---
+        const verbSelect = document.getElementById('verbSelect');
+        const subjectSelect = document.getElementById('subjectSelect');
+        const tenseSelect = document.getElementById('tenseSelect');
+        const generateButton = document.getElementById('generateButton');
+        const sentenceOutput = document.getElementById('sentenceOutput');
+        const argumentPrompts = document.getElementById('argumentPrompts');
+        const outputArea = document.getElementById('outputArea');
+        const verbValencyInfo = document.getElementById('verbValencyInfo');
+        const subjectTypeInfo = document.getElementById('subjectTypeInfo');
+        const errorMessage = document.getElementById('errorMessage');
+        const exampleSentenceSection = document.getElementById('exampleSentenceSection');
+        const exampleSentenceOutput = document.getElementById('exampleSentenceOutput');
+
+        // --- FUNZIONI ---
+        function populateSelect(selectElement, data, valueKey, textKey, additionalInfoCallback) {
+            data.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item[valueKey];
+                option.textContent = item[textKey];
+                if (additionalInfoCallback) { option.dataset.info = additionalInfoCallback(item); }
+                selectElement.appendChild(option);
+            });
+        }
+        
+        function updateVerbValencyInfo() {
+            const selectedVerbInfinitive = verbSelect.value;
+            if (!selectedVerbInfinitive) { verbValencyInfo.textContent = ""; return; }
+            const verb = verbsData.find(v => v.infinitive === selectedVerbInfinitive);
+            if (verb) {
+                let valencyText = `Questo verbo ha bisogno di ${verb.valency} `;
+                if (verb.valency === 1) valencyText += "attore";
+                else if (verb.valency > 1) valencyText += "attori";
+                verbValencyInfo.textContent = valencyText;
+            } else {
+                verbValencyInfo.textContent = "";
+            }
+        }
+
+        function updateSubjectTypeInfo() {
+            const selectedSubject = subjectSelect.value;
+            if (!selectedSubject) { subjectTypeInfo.textContent = ""; return; }
+            const subject = subjectsData.find(s => s.text === selectedSubject);
+            if (subject) {
+                let subjectTypeInfoText = `Questo soggetto è `;
+				switch (subject.personIndex) {
+					case 0:
+					case 3:
+						subjectTypeInfoText += "una prima persona "+subject.number
+						break;
+					case 1:
+					case 4:
+						subjectTypeInfoText += "una seconda persona "+subject.number
+						break;
+					case 2:
+					case 5:
+						subjectTypeInfoText += "una terza persona "+subject.number
+						break;
+				}
+				if (subject.gender === "f") {
+					subjectTypeInfoText += " di genere femminile" 
+				}
+				else {
+					if (subject.personIndex < 3) {
+						subjectTypeInfoText += " di genere maschile" 
+					}
+					else {
+						subjectTypeInfoText += " di genere maschile o misto (un gruppo con nomi maschili e femminili)" 
+					}
+				}
+                subjectTypeInfo.textContent = subjectTypeInfoText;
+            } else {
+                subjectTypeInfo.textContent = "";
+            }
+        }
+
+        function getPastParticiple(particleStem, gender, number, auxiliary) {
+            if (auxiliary === "essere") {
+                // Accordo obbligatorio con il soggetto per 'essere'
+                if (gender === "m") {
+                    return particleStem + (number === "singolare" ? "o" : "i");
+                } else { // gender === "f"
+                    return particleStem + (number === "singolare" ? "a" : "e");
+                }
+            } else { // auxiliary === "avere"
+                // Per 'avere', il participio di solito finisce in -o.
+                // particleStem per verbi come leggere, dare, spedire è già il participio m.s.
+                // o la radice a cui aggiungere 'o' per i regolari.
+                // Se particleStem è già un participio completo (es. "letto", "dato", "spedito"), usalo.
+                // Altrimenti, aggiungi "o".
+                if (["lett", "dat", "spedit"].includes(particleStem)) { // Esempi di participi irregolari
+                     if (particleStem === "lett") return "letto";
+                     if (particleStem === "dat") return "dato";
+                     if (particleStem === "spedit") return "spedito";
+                }
+                // Per i regolari in -ato, -uto, -ito (es. mangiat -> mangiato)
+                return particleStem + "o";
+            }
+        }
+
+        function generateSentence() {
+            if (!verbSelect.value || !subjectSelect.value || !tenseSelect.value) {
+                errorMessage.textContent = "Per favore, seleziona un verbo, un soggetto e un tempo.";
+                errorMessage.classList.remove('hidden');
+                outputArea.classList.add('hidden');
+                exampleSentenceSection.classList.add('hidden');
+                return;
+            }
+            errorMessage.classList.add('hidden');
+
+            const selectedVerbInfinitive = verbSelect.value;
+            const selectedSubjectText = subjectSelect.value;
+            const selectedTenseValue = tenseSelect.value;
+
+            const verb = verbsData.find(v => v.infinitive === selectedVerbInfinitive);
+            const subject = subjectsData.find(s => s.text === selectedSubjectText);
+            
+            if (!verb || !subject) {
+                errorMessage.textContent = "Errore nel recuperare i dati del verbo o del soggetto.";
+                errorMessage.classList.remove('hidden');
+                outputArea.classList.add('hidden');
+                exampleSentenceSection.classList.add('hidden');
+                return;
+            }
+
+            let conjugatedVerb = "";
+            const personIndex = subject.personIndex;
+
+            switch (selectedTenseValue) {
+                case "presente":
+                    conjugatedVerb = verb.conjugations.presente[personIndex];
+                    break;
+                case "futuro_semplice":
+                    conjugatedVerb = verb.conjugations.futuro_semplice[personIndex];
+                    break;
+                case "passato_prossimo":
+                    const auxiliaryVerb = verb.conjugations.passato_prossimo_aux[personIndex];
+                    const participle = getPastParticiple(verb.particleStem, subject.gender, subject.number, verb.auxiliary);
+                    conjugatedVerb = auxiliaryVerb + " " + participle;
+                    break;
+            }
+
+            const sentence = `${subject.text} ${conjugatedVerb}`;
+            sentenceOutput.textContent = sentence; // Frase base senza colori
+
+            argumentPrompts.innerHTML = "";
+            if (verb.valency === 1) {
+                const p = document.createElement('p');
+                p.innerHTML = `No, il verbo <strong class="text-indigo-600">${verb.infinitive}</strong> ha bisogno solo del soggetto.`;
+                <!-- p.className = "italic"; -->
+                argumentPrompts.appendChild(p);
+            } else {
+                const introP = document.createElement('p');
+                introP.innerHTML = `Il verbo <strong class="text-indigo-600">${verb.infinitive}</strong> ha bisogno di ${verb.valency} attori. Uno è il soggetto, ma manca qualcosa per completare la frase. Se una persona ci dice questa frase noi chiediamo`;
+                argumentPrompts.appendChild(introP);
+                const ul = document.createElement('ul');
+                ul.className = 'list-disc list-inside ml-4 mt-1';
+                for (let i = 1; i < verb.valency; i++) {
+                    if (verb.argsPrompts[i]) {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<strong class="font-medium">${verb.argsPrompts[i]}</strong> ...`;
+                        ul.appendChild(li);
+                    }
+                }
+                argumentPrompts.appendChild(ul);
+            }
+            outputArea.classList.remove('hidden');
+
+            // Gestione frase di esempio completa con colori
+            if (verb.valency >= 2 && verb.exampleArgs && verb.exampleArgs.length > 0) {
+                let exampleFullSentenceHTML = `<span class="sentence-subject">${subject.text}</span> <span class="sentence-verb">${conjugatedVerb}</span>`;
+                
+                verb.exampleArgs.forEach(arg => {
+                    let argClass = '';
+                    switch(arg.type) {
+                        case 'directObject': argClass = 'sentence-direct-object'; break;
+                        case 'indirectObject': argClass = 'sentence-indirect-object'; break;
+                        case 'preposition': argClass = 'sentence-preposition'; break;
+                        default: argClass = '';
+                    }
+                    exampleFullSentenceHTML += ` <span class="${argClass}">${arg.text}</span>`;
+                });
+                exampleFullSentenceHTML += ".";
+                
+                exampleSentenceOutput.innerHTML = exampleFullSentenceHTML;
+                exampleSentenceSection.classList.remove('hidden');
+            } else {
+                exampleSentenceSection.classList.add('hidden');
+                exampleSentenceOutput.innerHTML = "";
+            }
+        }
+
+        // --- INIZIALIZZAZIONE ---
+        document.addEventListener('DOMContentLoaded', () => {
+            populateSelect(verbSelect, verbsData, 'infinitive', 'infinitive', item => `Valenza: ${item.valency}`);
+            populateSelect(subjectSelect, subjectsData, 'text', 'text');
+            populateSelect(tenseSelect, tensesData, 'value', 'label');
+            verbSelect.addEventListener('change', updateVerbValencyInfo);
+            updateVerbValencyInfo();
+            subjectSelect.addEventListener('change', updateSubjectTypeInfo);
+            updateSubjectTypeInfo();
+            generateButton.addEventListener('click', generateSentence);
+        });
+    </script>
+</body>
+</html>
