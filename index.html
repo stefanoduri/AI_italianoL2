@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benvenuti! Italiano L2 per Te</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Sfondo grigio chiaro */
+        }
+        .hero-bg {
+            background-image: url('https://placehold.co/1200x600/a0aec0/ffffff?text=Studenti+Felici+Imparano+Italiano');
+            background-size: cover;
+            background-position: center;
+        }
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+        .btn-primary {
+            background-color: #3b82f6; /* Blu primario */
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb; /* Blu più scuro all'hover */
+        }
+        .section-title {
+            font-size: 2.25rem; /* 36px */
+            font-weight: 700;
+            color: #1e293b; /* Grigio scuro */
+            margin-bottom: 1.5rem; /* 24px */
+            text-align: center;
+        }
+        .section-subtitle {
+            font-size: 1.125rem; /* 18px */
+            color: #475569; /* Grigio medio */
+            text-align: center;
+            margin-bottom: 3rem; /* 48px */
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        nav a {
+            transition: color 0.2s ease-in-out;
+        }
+        nav a:hover {
+            color: #3b82f6; /* Blu primario per hover link nav */
+        }
+    </style>
+</head>
+<body class="text-gray-700">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-blue-600">Italiano L2 per Te</a>
+            <nav class="space-x-6">
+                <a href="#hero" class="text-gray-600 hover:text-blue-500 font-medium">Home</a>
+                <a href="#chi-siamo" class="text-gray-600 hover:text-blue-500 font-medium">Chi Siamo</a>
+                <a href="#risorse" class="text-gray-600 hover:text-blue-500 font-medium">Risorse</a>
+                <a href="#contatti" class="text-gray-600 hover:text-blue-500 font-medium">Contatti</a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero" class="hero-bg text-white py-20 sm:py-32">
+        <div class="container mx-auto px-6 text-center bg-black bg-opacity-50 p-8 sm:p-12 rounded-lg">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">Impara l'Italiano, Costruisci il Tuo Futuro</h1>
+            <p class="text-lg sm:text-xl mb-8 max-w-2xl mx-auto">Risorse gratuite e supporto per migranti che desiderano apprendere la lingua e la cultura italiana.</p>
+            <a href="#risorse" class="btn-primary text-lg">Scopri le Risorse</a>
+        </div>
+    </section>
+
+    <section id="chi-siamo" class="py-16 sm:py-24 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title">La Nostra Missione</h2>
+            <p class="section-subtitle">
+                Crediamo che l'apprendimento della lingua sia il primo passo fondamentale per un'integrazione di successo.
+                Il nostro obiettivo è fornire strumenti accessibili e di qualità per aiutare i nuovi arrivati a sentirsi a casa in Italia.
+            </p>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                <div class="md:w-1/2">
+                    <img src="https://placehold.co/600x400/d1d5db/374151?text=Insegnanti+Volontari+Appassionati" alt="[Immagine di insegnanti che aiutano studenti]" class="rounded-lg shadow-lg w-full">
+                </div>
+                <div class="md:w-1/2 text-lg text-gray-600 space-y-4">
+                    <p>Siamo un gruppo di volontari, insegnanti e appassionati della lingua italiana. Mettiamo a disposizione la nostra esperienza per creare contenuti didattici chiari, pratici e culturalmente rilevanti.</p>
+                    <p>Vogliamo abbattere le barriere linguistiche e culturali, offrendo un ambiente di apprendimento accogliente e stimolante. Ogni risorsa è pensata per essere immediatamente utile nella vita quotidiana.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="risorse" class="py-16 sm:py-24">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title">Cosa Troverai Qui</h2>
+            <p class="section-subtitle">
+                Esplora le nostre sezioni per trovare materiali adatti al tuo livello e ai tuoi interessi.
+                Aggiorniamo costantemente i contenuti per offrirti sempre nuove opportunità di apprendimento.
+            </p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card p-6">
+                    <img src="https://placehold.co/100x100/3b82f6/ffffff?text=ABC" alt="[Icona per grammatica]" class="h-16 w-16 mb-4 rounded-full shadow-md mx-auto">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Grammatica Facile</h3>
+                    <p class="text-gray-600 text-center">Spiegazioni chiare delle regole grammaticali italiane, con esempi pratici e schemi riassuntivi.</p>
+                </div>
+                <div class="card p-6">
+                    <img src="https://placehold.co/100x100/10b981/ffffff?text=✍️" alt="[Icona per esercizi]" class="h-16 w-16 mb-4 rounded-full shadow-md mx-auto">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Esercizi Interattivi</h3>
+                    <p class="text-gray-600 text-center">Metti alla prova le tue conoscenze con quiz, giochi e attività per consolidare l'apprendimento.</p>
+                </div>
+                <div class="card p-6">
+                    <img src="https://placehold.co/100x100/f59e0b/ffffff?text=🗣️" alt="[Icona per vocabolario]" class="h-16 w-16 mb-4 rounded-full shadow-md mx-auto">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Vocabolario Essenziale</h3>
+                    <p class="text-gray-600 text-center">Liste di parole e frasi utili per la vita di tutti i giorni, divise per argomento (lavoro, casa, salute, ecc.).</p>
+                </div>
+                <div class="card p-6">
+                    <img src="https://placehold.co/100x100/ec4899/ffffff?text=🇮🇹" alt="[Icona per cultura]" class="h-16 w-16 mb-4 rounded-full shadow-md mx-auto">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Cultura e Vita in Italia</h3>
+                    <p class="text-gray-600 text-center">Articoli e guide per conoscere meglio gli usi, i costumi e le informazioni pratiche per vivere in Italia.</p>
+                </div>
+                 <div class="card p-6">
+                    <img src="https://placehold.co/100x100/6366f1/ffffff?text=🎧" alt="[Icona per audio/video]" class="h-16 w-16 mb-4 rounded-full shadow-md mx-auto">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Materiali Audio/Video</h3>
+                    <p class="text-gray-600 text-center">Video lezioni, podcast e dialoghi per migliorare la comprensione orale e la pronuncia.</p>
+                </div>
+                 <div class="card p-6">
+                    <img src="https://placehold.co/100x100/8b5cf6/ffffff?text=🤝" alt="[Icona per comunità/supporto]" class="h-16 w-16 mb-4 rounded-full shadow-md mx-auto">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Link Utili e Supporto</h3>
+                    <p class="text-gray-600 text-center">Una raccolta di link a enti, associazioni e servizi utili per i migranti sul territorio.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contatti" class="py-16 sm:py-24 bg-blue-600 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-4">Hai Domande o Suggerimenti?</h2>
+            <p class="text-lg mb-8 max-w-xl mx-auto">Siamo qui per aiutarti. Non esitare a contattarci per qualsiasi informazione o se vuoi collaborare con noi.</p>
+            <a href="mailto:info@italianol2xte.it?subject=Informazioni dal sito" class="bg-white text-blue-600 font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-gray-100 transition duration-300 text-lg">
+                Scrivici una Email
+            </a>
+            <p class="mt-6 text-sm">
+                (Esempio: info@italianol2xte.it)
+            </p>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-gray-300 py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; <span id="currentYear"></span> Italiano L2 per Te. Tutti i diritti riservati.</p>
+            <p class="text-sm mt-2">Un progetto per facilitare l'apprendimento e l'integrazione.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="hover:text-white">Facebook (placeholder)</a>
+                <a href="#" class="hover:text-white">Instagram (placeholder)</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Script per l'anno corrente nel footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Smooth scroll per i link di navigazione
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Calcola la posizione dell'elemento target tenendo conto dell'altezza dell'header fisso
+                    const headerOffset = document.querySelector('header').offsetHeight;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
