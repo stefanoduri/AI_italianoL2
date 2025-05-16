@@ -416,7 +416,7 @@
             populateSelect(verbSelect, verbsData, 'infinitive', 'infinitive', item => `Valenza: ${item.valency}`);
             populateSelect(subjectSelect, subjectsData, 'text', 'text');
             populateSelect(tenseSelect, tensesData, 'value', 'label');
-            outputArea.style.display = "none"
+            // outputArea.style.display = "none"
 
             verbSelect.addEventListener('change', updateVerbValencyInfo);
             updateVerbValencyInfo();
